@@ -30,7 +30,7 @@ app.post('/crearcontacto',(req,res)=>{
         nombre:'',
         edad: 12,
         telefono:'123456789'})
-})
+    })
 
 app.get('/buscarcontacto',(req,res)=>{
 
