@@ -15,7 +15,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
         return console.log('Unable to connect to database!')
     }
     db = client.db(databaseName)
-   
+  
 })
 
 app.post('/crearcontacto',(req,res)=>{
@@ -66,8 +66,24 @@ app.put('/actualizarcontacto',(req,res)=>{
         res.send(err))
 })
 
-app.delete('/borracontacto',(req,res)=>{
-
+app.delete('/borrarcontacto',(req,res)=>{
+    db.collection('Alumno').findOne({_id:new mongodb.ObjectId(req.body.id)})
+    .then(data =>{
+        if(data!=null){
+            db.collection('Alumno').deleteOne(data)
+            res.send({estado:"Borrado"})
+        }
+        else{
+            res.send(
+                {estado:"Error"}
+            )
+        }
+        }
+    )
+    .catch(err=>
+        res.send(err))
+    
 })
 
-app.listen(3000)
+app.listen(3000, ()=>
+    console.log('Puerto 3000 encendido'))
