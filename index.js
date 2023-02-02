@@ -12,7 +12,7 @@ let db =null
 
 MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) => {
     if (error) {
-        return console.log('Unable to connect to database!')
+        return console.log('No se ha podido conectar a la base de datos')
     }
     db = client.db(databaseName)
   
@@ -33,7 +33,9 @@ app.get('/buscarcontacto',(req,res)=>{
     db.collection('Alumno').findOne({_id:new mongodb.ObjectId(req.body.id)})
     .then(data =>
         res.send({
-            nombre:data.nombre
+            id:data._id,
+            nombre:data.nombre,
+            dni: data.dni
         })
     )
     .catch(err=>
